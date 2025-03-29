@@ -1,0 +1,193 @@
+/* Accessibility Controls Styles */
+.accessibility-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: var(--z-index-fixed);
+  }
+  
+  .accessibility-toggle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+  }
+  
+  .accessibility-toggle:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  .accessibility-icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+  
+  .accessibility-menu {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: var(--spacing-md);
+    width: 300px;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-md);
+    z-index: var(--z-index-dropdown);
+  }
+  
+  .menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .menu-header h3 {
+    margin-bottom: 0;
+  }
+  
+  .close-menu {
+    background: none;
+    border: none;
+    font-size: var(--font-size-xl);
+    color: var(--text-light);
+    cursor: pointer;
+  }
+  
+  .menu-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .option-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .option-label {
+    font-weight: 500;
+  }
+  
+  /* Toggle Switch */
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  
+  .toggle-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    border-radius: 24px;
+    transition: background-color var(--transition-fast);
+  }
+  
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform var(--transition-fast);
+  }
+  
+  .toggle-input:checked + .toggle-slider {
+    background-color: var(--primary-color);
+  }
+  
+  .toggle-input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+  }
+  
+  /* Font size controls */
+  .font-size-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+  
+  .font-decrease, .font-reset, .font-increase {
+    background-color: var(--background-alt);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+  }
+  
+  .font-decrease:hover, .font-reset:hover, .font-increase:hover {
+    background-color: var(--border-color);
+  }
+  
+  .option-button.full-width {
+    width: 100%;
+    text-align: center;
+    padding: var(--spacing-sm);
+    background-color: var(--background-alt);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+  }
+  
+  .option-button.full-width:hover {
+    background-color: var(--border-color);
+  }
+  
+  /* Focus Styles for Accessibility */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  [tabindex="0"]:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+  
+  /* High Contrast Mode Additional Styles */
+  .high-contrast a:focus-visible,
+  .high-contrast button:focus-visible,
+  .high-contrast input:focus-visible,
+  .high-contrast [tabindex="0"]:focus-visible {
+    outline: 3px solid var(--primary-dark);
+    outline-offset: 3px;
+  }
+  
+  .high-contrast .toggle-slider {
+    border: 1px solid var(--text-color);
+  }
+  
+  .high-contrast .toggle-slider:before {
+    border: 1px solid var(--text-color);
+  }

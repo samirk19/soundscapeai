@@ -1,0 +1,15 @@
+/* Import all CSS files */
+@import url('variables.css');
+@import url('reset.css');
+@import url('buttons.css');
+@import url('layout.css');
+@import url('image-upload.css');
+@import url('loading-error.css');
+@import url('results.css');
+@import url('audio-player.css');
+@import url('modal.css');
+@import url('accessibility.css');
+@import url('pages.css');
+
+/* Import Inter font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
