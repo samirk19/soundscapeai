@@ -92,6 +92,10 @@ npm start
 
 This project is proprietary and not licensed for redistribution or use outside of this specific project.
 
+## Sources
+
+Claude 3.7 Sonnet, Cursor AI, Playboi Carti - OPM BABI
+
 ## Acknowledgments
 
 - HooHacks 2025 organizers
