@@ -122,7 +122,7 @@ const AudioVisualizer: React.FC<AudioVisualizerProps> = ({ audioRef, isPlaying }
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
-    const dpr = window.devicePixelRatio || 1;
+    //const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;

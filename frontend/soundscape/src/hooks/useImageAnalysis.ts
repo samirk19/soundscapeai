@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { api } from '../services/api';
 import { useAppContext } from '../context/AppContext';
 
-interface AnalysisResult {
-  imageId: string;
-  description: string;
-  scene: string;
-  audioUrl: string;
-  detectedElements: string[];
-}
+// interface AnalysisResult {
+//   imageId: string;
+//   description: string;
+//   scene: string;
+//   audioUrl: string;
+//   detectedElements: string[];
+// }
 
 export const useImageAnalysis = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
