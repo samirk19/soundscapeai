@@ -1,139 +1,187 @@
 /* Results Container Styles */
 .results-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
   .results-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-lg);
-  }
-  
-  @media (min-width: 768px) {
-    .results-grid {
-      grid-template-columns: 1fr 2fr;
-    }
-  }
-  
-  .results-image-container {
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .results-image {
-    width: 100%;
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-md);
-  }
-  
-  /* Scene Description Styles */
-  .scene-description {
-    padding: var(--spacing-lg);
-    border-radius: var(--border-radius-md);
-    background-color: var(--scene-default);
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .scene-header {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .scene-icon {
-    font-size: var(--font-size-xl);
-  }
-  
-  .scene-content p {
-    margin-bottom: var(--spacing-md);
-    font-size: var(--font-size-lg);
-    line-height: 1.6;
-  }
-  
-  .scene-type {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-md);
-    font-size: var(--font-size-sm);
-  }
-  
-  .scene-label {
-    font-weight: 600;
-    color: var(--text-light);
-  }
-  
-  .scene-value {
-    font-weight: 500;
-    background-color: rgba(0, 0, 0, 0.05);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--border-radius-sm);
-  }
-  
-  /* Detected Elements Styles */
-  .detected-elements {
-    padding: var(--spacing-lg);
-    border-radius: var(--border-radius-md);
-    background-color: var(--background-alt);
-    box-shadow: var(--shadow-sm);
-  }
-  
-  .elements-list {
-    display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-md);
   }
-  
-  .element-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    background-color: var(--background-color);
-    border-radius: var(--border-radius-sm);
-    box-shadow: var(--shadow-sm);
-  }
-  
-  .element-icon {
-    font-size: var(--font-size-lg);
-  }
-  
-  .element-name {
-    font-weight: 500;
-  }
-  
-  /* Scene Type Colors */
-  .scene-urban {
-    background-color: var(--scene-urban);
-  }
-  
-  .scene-beach {
-    background-color: var(--scene-beach);
-  }
-  
-  .scene-mountain {
-    background-color: var(--scene-mountain);
-  }
-  
-  .scene-forest {
-    background-color: var(--scene-forest);
-  }
-  
-  .scene-desert {
-    background-color: var(--scene-desert);
-  }
-  
-  .scene-rural {
-    background-color: var(--scene-rural);
-  }
-  
-  .scene-indoor {
-    background-color: var(--scene-indoor);
-  }
-  
-  .scene-default {
-    background-color: var(--scene-default);
-  }
+}
+
+/* Making the image container larger and more prominent */
+.results-image-container {
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.results-image-container h3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  margin: 0;
+  font-size: var(--font-size-md);
+}
+
+.results-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.results-image-container:hover .results-image {
+  transform: scale(1.02);
+}
+
+/* Scene Description Styles */
+.scene-description {
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  background-color: var(--scene-default);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.scene-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.scene-icon {
+  font-size: var(--font-size-xl);
+}
+
+.scene-content p {
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-lg);
+  line-height: 1.6;
+}
+
+.scene-type {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.scene-label {
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.scene-value {
+  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+/* Detected Elements Styles */
+.detected-elements {
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  background-color: var(--background-alt);
+  box-shadow: var(--shadow-sm);
+}
+
+.elements-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.element-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.element-icon {
+  font-size: var(--font-size-lg);
+}
+
+.element-name {
+  font-weight: 500;
+}
+
+/* Audio player styles enhancement */
+.audio-player {
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  background-color: var(--background-color);
+  box-shadow: var(--shadow-lg);
+  margin-top: var(--spacing-md);
+}
+
+.audio-player h3 {
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--background-alt);
+  border-radius: var(--border-radius-md);
+}
+
+/* Scene Type Colors */
+.scene-urban {
+  background-color: var(--scene-urban);
+}
+
+.scene-beach {
+  background-color: var(--scene-beach);
+}
+
+.scene-mountain {
+  background-color: var(--scene-mountain);
+}
+
+.scene-forest {
+  background-color: var(--scene-forest);
+}
+
+.scene-desert {
+  background-color: var(--scene-desert);
+}
+
+.scene-rural {
+  background-color: var(--scene-rural);
+}
+
+.scene-indoor {
+  background-color: var(--scene-indoor);
+}
+
+.scene-default {
+  background-color: var(--scene-default);
+}

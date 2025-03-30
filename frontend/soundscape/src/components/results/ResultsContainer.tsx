@@ -46,6 +46,7 @@ const ResultsContainer: React.FC = () => {
           <AudioPlayer 
             audioUrl={audioUrl} 
             description={description}
+            hideVisualizer={true}
           />
         </div>
       </div>

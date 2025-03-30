@@ -5,31 +5,38 @@ interface AudioVisualizerProps {
   isPlaying: boolean;
 }
 
+// Create a shared AudioContext
+const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+
 const AudioVisualizer: React.FC<AudioVisualizerProps> = ({ audioRef, isPlaying }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | undefined>(undefined);
   const analyserRef = useRef<AnalyserNode | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
   const sourceNodeRef = useRef<MediaElementAudioSourceNode | null>(null);
 
   // Set up the audio analyzer
   useEffect(() => {
     if (!audioRef.current) return;
 
-    // Create audio context and analyzer if they don't exist yet
-    if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
-      analyserRef.current = audioContextRef.current.createAnalyser();
+    // Create analyzer if it doesn't exist yet
+    if (!analyserRef.current) {
+      analyserRef.current = audioContext.createAnalyser();
       analyserRef.current.fftSize = 256;
-      sourceNodeRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
+      
+      // Create and connect the source node
+      sourceNodeRef.current = audioContext.createMediaElementSource(audioRef.current);
       sourceNodeRef.current.connect(analyserRef.current);
-      analyserRef.current.connect(audioContextRef.current.destination);
+      analyserRef.current.connect(audioContext.destination);
     }
 
     // Cleanup function
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
+      }
+      // Disconnect nodes on cleanup
+      if (sourceNodeRef.current) {
+        sourceNodeRef.current.disconnect();
       }
     };
   }, [audioRef]);

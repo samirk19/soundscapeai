@@ -1,15 +1,22 @@
-import React, { useRef, useState, useEffect } from 'react';
-import AudioVisualizer from './AudioVisualizer';
-import DownloadButton from './DownloadButton';
-import Button from '../common/Button';
+import React, { useRef, useState, useEffect } from "react";
+import AudioVisualizer from "./AudioVisualizer";
+import DownloadButton from "./DownloadButton";
+import Button from "../common/Button";
 
 interface AudioPlayerProps {
   audioUrl: string;
   description: string;
+  hideVisualizer?: boolean;
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
-  const audioRef = useRef<HTMLAudioElement>(null) as React.RefObject<HTMLAudioElement>;
+const AudioPlayer: React.FC<AudioPlayerProps> = ({
+  audioUrl,
+  description,
+  hideVisualizer = false,
+}) => {
+  const audioRef = useRef<HTMLAudioElement>(
+    null
+  ) as React.RefObject<HTMLAudioElement>;
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -17,6 +24,18 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
   const [isLooping, setIsLooping] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [audioLoaded, setAudioLoaded] = useState(false);
+
+  // Initialize audio element when component mounts
+  useEffect(() => {
+    if (audioRef.current) {
+      // Manually set the src attribute
+      audioRef.current.src = audioUrl;
+
+      // Force a load of the audio file
+      audioRef.current.load();
+    }
+  }, [audioUrl]);
 
   // Set up event listeners for the audio element
   useEffect(() => {
@@ -26,6 +45,12 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
     const handleLoadedMetadata = () => {
       setDuration(audio.duration);
       setIsLoading(false);
+      setAudioLoaded(true);
+    };
+
+    const handleCanPlayThrough = () => {
+      setIsLoading(false);
+      setAudioLoaded(true);
     };
 
     const handleTimeUpdate = () => {
@@ -36,51 +61,83 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
       setIsPlaying(false);
       setCurrentTime(0);
       if (isLooping) {
-        audio.play().catch(err => {
-          console.error('Error replaying audio:', err);
-          setError('Error replaying audio');
+        audio.play().catch((err) => {
+          console.error("Error replaying audio:", err);
+          setError("Error replaying audio");
         });
       }
     };
 
-    const handleError = () => {
+    const handleError = (e: Event) => {
+      console.error("Audio element error:", audio.error, e);
       setIsLoading(false);
-      setError('Error loading audio');
-      console.error('Audio element error:', audio.error);
+      setError(
+        `Error loading audio: ${audio.error?.message || "Unknown error"}`
+      );
     };
 
     // Add event listeners
-    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('ended', handleEnded);
-    audio.addEventListener('error', handleError);
-    
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("canplaythrough", handleCanPlayThrough);
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("error", handleError);
+
     // Update audio volume
     audio.volume = volume;
+    audio.loop = isLooping;
 
     // Return cleanup function
     return () => {
-      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('ended', handleEnded);
-      audio.removeEventListener('error', handleError);
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("canplaythrough", handleCanPlayThrough);
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("error", handleError);
     };
-  }, [isLooping, volume]);
+  }, [isLooping, volume, audioUrl]);
 
   // Toggle play/pause
-  const togglePlayPause = () => {
+  const togglePlayPause = async () => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play().catch(err => {
-        console.error('Error playing audio:', err);
-        setError('Error playing audio');
-      });
+    try {
+      if (isPlaying) {
+        audio.pause();
+        setIsPlaying(false);
+      } else {
+        // Resume or start the AudioContext (required by some browsers)
+        if (window.AudioContext || (window as any).webkitAudioContext) {
+          const AudioContextClass =
+            window.AudioContext || (window as any).webkitAudioContext;
+          const context = new AudioContextClass();
+          if (context.state === "suspended") {
+            await context.resume();
+          }
+        }
+
+        // Ensure the audio is loaded
+        if (audio.readyState < 2) {
+          // HAVE_CURRENT_DATA = 2
+          audio.load();
+        }
+
+        try {
+          await audio.play();
+          setIsPlaying(true);
+        } catch (playError) {
+          console.error("Error during play():", playError);
+          setError("Browser blocked autoplay. Please try again.");
+        }
+      }
+    } catch (err) {
+      console.error("Error toggling audio playback:", err);
+      setError(
+        "Error playing audio: " +
+          (err instanceof Error ? err.message : String(err))
+      );
     }
-    setIsPlaying(!isPlaying);
   };
 
   // Seek to a specific time
@@ -113,9 +170,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
 
   // Toggle loop
   const toggleLoop = () => {
-    setIsLooping(!isLooping);
+    const newLoopState = !isLooping;
+    setIsLooping(newLoopState);
     if (audioRef.current) {
-      audioRef.current.loop = !isLooping;
+      audioRef.current.loop = newLoopState;
     }
   };
 
@@ -123,41 +181,50 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
+  // Handle retry when there's an error
+  const handleRetry = () => {
+    setError(null);
+    setIsLoading(true);
+
+    if (audioRef.current) {
+      audioRef.current.src = audioUrl;
+      audioRef.current.load();
+    }
   };
 
   return (
     <div className="audio-player">
       <h3>Generated Soundscape</h3>
-      
+
       <div className="audio-player-container" aria-label="Audio player">
-        <audio 
-          ref={audioRef} 
-          src={audioUrl} 
-          preload="metadata"
+        <audio
+          ref={audioRef}
+          preload="auto"
+          crossOrigin="anonymous"
           aria-hidden="true"
         />
-        
+
         {isLoading ? (
           <div className="audio-loading" aria-live="polite">
             <svg className="spinner" viewBox="0 0 50 50">
-              <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+              <circle
+                className="path"
+                cx="25"
+                cy="25"
+                r="20"
+                fill="none"
+                strokeWidth="5"
+              ></circle>
             </svg>
             <span>Loading audio...</span>
           </div>
         ) : error ? (
           <div className="audio-error" aria-live="assertive">
             <p>{error}</p>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setError(null);
-                setIsLoading(true);
-                if (audioRef.current) {
-                  audioRef.current.load();
-                }
-              }}
-            >
+            <Button variant="outline" onClick={handleRetry}>
               Retry
             </Button>
           </div>
@@ -166,22 +233,32 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
             <div className="player-controls">
               <Button
                 variant="ghost"
-                className={`play-pause-button ${isPlaying ? 'playing' : ''}`}
+                className={`play-pause-button ${isPlaying ? "playing" : ""}`}
                 onClick={togglePlayPause}
-                aria-label={isPlaying ? 'Pause' : 'Play'}
+                aria-label={isPlaying ? "Pause" : "Play"}
               >
                 {isPlaying ? (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    width="24"
+                    height="24"
+                  >
                     <rect x="6" y="4" width="4" height="16" />
                     <rect x="14" y="4" width="4" height="16" />
                   </svg>
                 ) : (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <polygon points="5,3 19,12 5,21" />
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    width="24"
+                    height="24"
+                  >
+                    <path d="M8,5.14V19.14L19,12.14L8,5.14Z" />
                   </svg>
                 )}
               </Button>
-              
+
               <div className="time-slider">
                 <span className="current-time">{formatTime(currentTime)}</span>
                 <input
@@ -195,12 +272,12 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
                 />
                 <span className="duration">{formatTime(duration)}</span>
               </div>
-              
+
               <div className="volume-control">
                 <Button
                   variant="ghost"
                   className="volume-button"
-                  aria-label={volume === 0 ? 'Unmute' : 'Mute'}
+                  aria-label={volume === 0 ? "Unmute" : "Mute"}
                   onClick={toggleVolume}
                 >
                   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -224,23 +301,23 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
                   aria-label="Volume"
                 />
               </div>
-              
+
               <Button
                 variant="ghost"
-                className={`loop-button ${isLooping ? 'active' : ''}`}
+                className={`loop-button ${isLooping ? "active" : ""}`}
                 onClick={toggleLoop}
-                aria-label={isLooping ? 'Disable loop' : 'Enable loop'}
-                title={isLooping ? 'Disable loop' : 'Enable loop'}
+                aria-label={isLooping ? "Disable loop" : "Enable loop"}
+                title={isLooping ? "Disable loop" : "Enable loop"}
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M17,17H7V14L3,18L7,22V19H19V13H17M7,7H17V10L21,6L17,2V5H5V11H7V7Z" />
                 </svg>
               </Button>
-              
+
               <DownloadButton audioUrl={audioUrl} description={description} />
             </div>
-            
-            {audioRef.current && (
+
+            {!hideVisualizer && audioLoaded && audioRef.current && (
               <AudioVisualizer audioRef={audioRef} isPlaying={isPlaying} />
             )}
           </>
