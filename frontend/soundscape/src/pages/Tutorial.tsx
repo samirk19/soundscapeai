@@ -5,7 +5,7 @@ const Tutorial: React.FC = () => {
   return (
     <div className="tutorial-container">
       <section className="tutorial-hero">
-        <h1>How to Use Soundscape</h1>
+        <h1>How to Use Soundscape AI</h1>
         <p className="subtitle">A complete guide to transforming your images into immersive soundscapes</p>
       </section>
       

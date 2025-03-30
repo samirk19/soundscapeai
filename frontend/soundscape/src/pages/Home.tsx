@@ -82,7 +82,7 @@ const Home: React.FC = () => {
   return (
     <div className="home-container">
       <section className="hero-section">
-        <h1>Soundscape</h1>
+        <h1>Soundscape AI</h1>
         <p className="subtitle">Hear the world through images</p>
         
         <div className="cta-container">
@@ -96,7 +96,6 @@ const Home: React.FC = () => {
               >
                 Try an Example
               </button>
-              
               <div className="or-divider">or</div>
             </>
           ) : (

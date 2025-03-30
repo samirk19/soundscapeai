@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useAppContext } from '../../context/AppContext';
 import DragDropZone from './DragDropZone';
 import ImagePreview from './ImagePreview';
@@ -19,6 +19,7 @@ const ImageUploader: React.FC = () => {
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Validate the file and set it in the context
   const validateAndSetFile = (file: File): boolean => {
@@ -49,6 +50,9 @@ const ImageUploader: React.FC = () => {
 
   // Handle file selection from the file input
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Mark the dialog as closed
+    setIsDialogOpen(false);
+    
     const files = event.target.files;
     if (files && files.length > 0) {
       validateAndSetFile(files[0]);
@@ -67,12 +71,42 @@ const ImageUploader: React.FC = () => {
   const handleDragEnter = () => setIsDragging(true);
   const handleDragLeave = () => setIsDragging(false);
 
-  // Trigger file input click
+  // Trigger file input click - this is the key function that needs to work
   const handleBrowseClick = () => {
+    // Prevent opening multiple file dialogs
+    if (isDialogOpen) {
+      return;
+    }
+    
+    // Ensure we have the input ref
     if (fileInputRef.current) {
+      // Set the flag indicating the dialog is open
+      setIsDialogOpen(true);
+      
+      // Directly trigger the click on the input element
       fileInputRef.current.click();
+    } else {
+      console.error("File input reference is not available");
     }
   };
+
+  // Add a focus event listener to detect when the dialog loses focus (likely canceled)
+  useEffect(() => {
+    const handleWindowFocus = () => {
+      // When window regains focus, we assume the file dialog was closed
+      // Set a small timeout to give the change event a chance to fire first
+      setTimeout(() => {
+        if (isDialogOpen) {
+          setIsDialogOpen(false);
+        }
+      }, 300);
+    };
+
+    window.addEventListener('focus', handleWindowFocus);
+    return () => {
+      window.removeEventListener('focus', handleWindowFocus);
+    };
+  }, [isDialogOpen]);
 
   // Reset the image preview and file
   const handleReset = () => {
@@ -110,6 +144,17 @@ const ImageUploader: React.FC = () => {
             accept={ALLOWED_TYPES.join(',')}
             style={{ display: 'none' }}
             aria-label="Upload image file"
+            onClick={(e) => {
+              // Prevent reopening if the dialog was just canceled
+              if (!isDialogOpen) {
+                setIsDialogOpen(true);
+              } else {
+                // If the dialog is still considered open, this is a quick successive click
+                // Prevent it to avoid double-opening
+                e.stopPropagation();
+                e.preventDefault();
+              }
+            }}
           />
           
           <div className="file-requirements">

@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-    readonly VITE_API_BASE_URL: "http://localhost:5173/";
+    readonly VITE_API_BASE_URL: "https://pknqxnta3a.execute-api.us-east-1.amazonaws.com/prod";
     // Add other environment variables here
   }
   

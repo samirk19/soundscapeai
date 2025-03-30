@@ -22,7 +22,7 @@ const Button: React.FC<ButtonProps> = ({
     secondary: 'bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary',
     outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
     ghost: 'text-primary hover:bg-primary/10 focus:ring-primary',
-    skip: 'text-text-lighter hover:text-text-lighter bg-none focus:ring-transparent'
+    skip: 'bg-transparent border-none text-text-light hover:text-text text-center cursor-pointer p-2 mt-2 text-sm hover:underline'
   };
 
   const sizes = {

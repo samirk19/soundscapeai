@@ -1,0 +1,50 @@
+/* SVG specific styles for dark mode */
+
+/* General approach for SVGs that should be inverted in dark mode */
+.dark-mode .svg-icon-invert {
+    filter: brightness(0) invert(1);
+  }
+  
+  /* Alternative approach using fill colors for SVGs with specific paths */
+  .dark-mode .icon-to-invert path,
+  .dark-mode .icon-to-invert rect,
+  .dark-mode .icon-to-invert circle,
+  .dark-mode .icon-to-invert polygon,
+  .dark-mode .icon-to-invert line {
+    fill: #ffffff;
+    stroke: #ffffff;
+  }
+  
+  /* Handle stroke-based SVGs */
+  .dark-mode .stroke-icon-invert path,
+  .dark-mode .stroke-icon-invert rect,
+  .dark-mode .stroke-icon-invert circle,
+  .dark-mode .stroke-icon-invert polygon,
+  .dark-mode .stroke-icon-invert line {
+    stroke: #ffffff;
+  }
+  
+  /* Apply to common UI elements that typically need inversion */
+  .dark-mode .error-icon,
+  .dark-mode .upload-icon,
+  .dark-mode .menu-icon,
+  .dark-mode .element-icon svg,
+  .dark-mode .visualizer-icon,
+  .dark-mode .nav-icon {
+    filter: brightness(0) invert(1);
+  }
+  
+  /* Specific adjustments for the drag-drop zone icon */
+  .dark-mode .drag-drop-content .upload-icon {
+    color: #ffffff; /* For SVGs using currentColor */
+  }
+  
+  /* Player controls in dark mode */
+  .dark-mode .player-controls svg:not(.colored-svg) {
+    fill: #ffffff;
+  }
+  
+  /* Specific exception for primary-colored SVGs */
+  .dark-mode .primary-svg {
+    filter: none; /* Don't invert these as they use brand colors */
+  }

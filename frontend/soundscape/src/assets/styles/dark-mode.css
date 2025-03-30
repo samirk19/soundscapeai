@@ -1,0 +1,103 @@
+/* Dark Mode additional CSS adjustments */
+
+/* Invert SVG colors in dark mode */
+.dark-mode svg:not(.accessibility-icon):not(.logo-icon) path,
+.dark-mode svg:not(.accessibility-icon):not(.logo-icon) rect,
+.dark-mode svg:not(.accessibility-icon):not(.logo-icon) circle,
+.dark-mode svg:not(.accessibility-icon):not(.logo-icon) polygon {
+  fill: #ffffff;
+}
+
+/* Except for SVGs that should keep their colors */
+.dark-mode svg.colored-svg path,
+.dark-mode svg.colored-svg rect,
+.dark-mode svg.colored-svg circle,
+.dark-mode svg.colored-svg polygon {
+  fill: currentColor; /* Use the current text color instead of forced white */
+}
+
+/* Adjust specific elements that might need more styling tweaks */
+.dark-mode .drag-drop-zone {
+  background-color: var(--background-alt);
+  border-color: var(--border-color);
+}
+
+.dark-mode .drag-drop-zone:hover, 
+.dark-mode .drag-drop-zone.dragging {
+  border-color: var(--primary-color);
+  background-color: rgba(108, 143, 255, 0.15);
+}
+
+/* Adjust image preview in dark mode */
+.dark-mode .image-preview-content {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Adjust visualizer colors in dark mode */
+.dark-mode .audio-visualizer {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Adjust the toggle switch appearance */
+.dark-mode .toggle-slider {
+  background-color: #444444;
+}
+
+.dark-mode .toggle-slider:before {
+  background-color: #f0f0f0;
+}
+
+.dark-mode .toggle-input:checked + .toggle-slider {
+  background-color: var(--primary-color);
+}
+
+/* Adjust menu backgrounds */
+.dark-mode .accessibility-menu {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Adjust buttons in dark mode */
+.dark-mode .font-decrease, 
+.dark-mode .font-reset, 
+.dark-mode .font-increase {
+  background-color: var(--background-alt);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.dark-mode .font-decrease:hover, 
+.dark-mode .font-reset:hover, 
+.dark-mode .font-increase:hover {
+  background-color: var(--primary-dark);
+  color: var(--background-color);
+}
+
+/* Adjust modal appearance */
+.dark-mode .onboarding-modal {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+/* Theme toggle icon styling */
+.theme-toggle-icon {
+  display: inline-block;
+  margin-right: 0.5rem;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+.dark-mode .theme-toggle-light {
+  display: inline-block;
+}
+
+.dark-mode .theme-toggle-dark {
+  display: none;
+}
+
+.theme-toggle-light {
+  display: none;
+}
+
+.theme-toggle-dark {
+  display: inline-block;
+}

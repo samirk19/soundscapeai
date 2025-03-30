@@ -135,10 +135,12 @@ const OnboardingModal: React.FC = () => {
             </Button>
           </div>
           
-          <Button 
-            variant="skip"
+          <Button
+            variant='skip'
             onClick={skipTutorial}
             aria-label="Skip tutorial"
+            fullWidth={false}
+
           >
             Skip Tutorial
           </Button>

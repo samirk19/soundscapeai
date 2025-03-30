@@ -5,14 +5,14 @@ const About: React.FC = () => {
   return (
     <div className="about-container">
       <section className="about-hero">
-        <h1>About Soundscape</h1>
+        <h1>About Soundscape AI</h1>
         <p className="subtitle">Transforming visual experiences into immersive audio</p>
       </section>
       
       <section className="about-section">
         <h2>Our Mission</h2>
         <p>
-          Soundscape was created with a simple yet powerful mission: to make visual content accessible to everyone through 
+          Soundscape AI was created with a simple yet powerful mission: to make visual content accessible to everyone through 
           the power of sound. We believe that images contain rich information that should be available to all people, 
           regardless of visual ability.
         </p>
@@ -58,7 +58,7 @@ const About: React.FC = () => {
       <section className="about-section">
         <h2>Technology</h2>
         <p>
-          Soundscape is built using modern web technologies including React, TypeScript, and AWS services. 
+          Soundscape AI is built using modern web technologies including React, TypeScript, and AWS services. 
           Our frontend is designed with accessibility as a core principle, ensuring that all users can easily navigate and 
           interact with the application.
         </p>
@@ -71,7 +71,7 @@ const About: React.FC = () => {
       
       <section className="cta-section">
         <h2>Ready to experience images in a new way?</h2>
-        <Link to="/" className="cta-button">Try Soundscape Now</Link>
+        <Link to="/" className="cta-button">Try Soundscape AI Now</Link>
       </section>
     </div>
   );

@@ -5,7 +5,8 @@ const REQUEST_TIMEOUT = 30000;
 const MAX_RETRIES = 3;
 
 // Base API URL - would typically come from environment variables
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://pknqxnta3a.execute-api.us-east-1.amazonaws.com/prod/api';
+console.log('API_BASE_URL:', API_BASE_URL);
 
 // Custom error class for API errors
 export class ApiError extends Error {
@@ -69,7 +70,10 @@ const retryFetch = async (url: string, options: RequestInit, retries = 0): Promi
 
 // Helper function to build API URLs
 const buildUrl = (endpoint: string): string => {
-  return `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  console.log('Built URL:', url);
+  console.log('Environment variable:', import.meta.env.VITE_API_BASE_URL);
+  return url;
 };
 
 // Type for upload progress callback

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 // Define the shape of our app state
 interface AppState {
@@ -13,6 +13,7 @@ interface AppState {
   detectedElements: string[];
   isFirstVisit: boolean;
   isHighContrast: boolean;
+  isDarkMode: boolean; // Dark mode state
 }
 
 // Define the actions that can modify the state
@@ -31,9 +32,10 @@ interface AppContextType extends AppState {
   resetState: () => void;
   completeOnboarding: () => void;
   toggleHighContrast: () => void;
+  toggleDarkMode: () => void; // Dark mode toggle
 }
 
-// Initial state
+// Initial state - set dark mode default to true
 const initialState: AppState = {
   isLoading: false,
   progress: 0,
@@ -46,6 +48,7 @@ const initialState: AppState = {
   detectedElements: [],
   isFirstVisit: true,
   isHighContrast: false,
+  isDarkMode: true, // Dark mode default is true
 };
 
 // Create context
@@ -54,16 +57,38 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 // Provider component
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<AppState>(() => {
-    // Check localStorage for first visit status
+    // Check localStorage for saved preferences
     const storedFirstVisit = localStorage.getItem('isFirstVisit');
     const storedHighContrast = localStorage.getItem('isHighContrast');
+    const storedDarkMode = localStorage.getItem('isDarkMode');
     
     return {
       ...initialState,
       isFirstVisit: storedFirstVisit ? storedFirstVisit === 'true' : true,
       isHighContrast: storedHighContrast ? storedHighContrast === 'true' : false,
+      // Default to dark mode (true) if isDarkMode is null or undefined
+      isDarkMode: storedDarkMode ? storedDarkMode === 'true' : true,
     };
   });
+
+  // Apply theme classes on initial load
+  useEffect(() => {
+    // Apply dark mode immediately on first load
+    if (state.isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+
+    if (state.isHighContrast) {
+      document.body.classList.add('high-contrast');
+    } else {
+      document.body.classList.remove('high-contrast');
+    }
+    
+    // Store dark mode preference
+    localStorage.setItem('isDarkMode', state.isDarkMode.toString());
+  }, [state.isDarkMode, state.isHighContrast]);
 
   // Actions to update state
   const setLoading = (isLoading: boolean) => {
@@ -108,6 +133,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       ...initialState,
       isFirstVisit: prev.isFirstVisit,
       isHighContrast: prev.isHighContrast,
+      isDarkMode: prev.isDarkMode,
     }));
   };
 
@@ -120,13 +146,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const newValue = !state.isHighContrast;
     setState(prev => ({ ...prev, isHighContrast: newValue }));
     localStorage.setItem('isHighContrast', newValue.toString());
-    
-    // Apply high contrast class to body
-    if (newValue) {
-      document.body.classList.add('high-contrast');
-    } else {
-      document.body.classList.remove('high-contrast');
-    }
+  };
+
+  const toggleDarkMode = () => {
+    const newValue = !state.isDarkMode;
+    setState(prev => ({ ...prev, isDarkMode: newValue }));
+    localStorage.setItem('isDarkMode', newValue.toString());
   };
 
   // Context value
@@ -141,6 +166,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     resetState,
     completeOnboarding,
     toggleHighContrast,
+    toggleDarkMode,
   };
 
   return (

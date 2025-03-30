@@ -1,0 +1,11 @@
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Image Frame -->
+    <rect x="3" y="3" width="14" height="14" rx="2" stroke="#000000" stroke-width="2" fill="none"/>
+    
+    <!-- Mountain/Scene Representation -->
+    <path d="M3 14L7 10L11 14L17 8" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Sound Wave Elements -->
+    <path d="M17 12C17 12 19 14 19 16C19 18 17 20 17 20" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+    <path d="M19 10C19 10 22 13 22 16C22 19 19 22 19 22" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+</svg>

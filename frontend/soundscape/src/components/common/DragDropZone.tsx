@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAppContext } from '../../context/AppContext';
 
 interface DragDropZoneProps {
   onDrop: (files: File[]) => void;
@@ -15,6 +16,8 @@ const DragDropZone: React.FC<DragDropZoneProps> = ({
   isDragging,
   onBrowseClick,
 }) => {
+  const { isDarkMode } = useAppContext();
+  
   // Prevent default behavior for drag events
   const preventDefaults = (e: React.DragEvent) => {
     e.preventDefault();
@@ -30,13 +33,6 @@ const DragDropZone: React.FC<DragDropZoneProps> = ({
     }
   };
 
-  // Handle the browse button click
-  const handleBrowseClick = (e: React.MouseEvent) => {
-    // Stop propagation to prevent the zone's click handler from being triggered
-    e.stopPropagation();
-    onBrowseClick();
-  };
-
   return (
     <div
       className={`drag-drop-zone ${isDragging ? 'dragging' : ''}`}
@@ -50,7 +46,6 @@ const DragDropZone: React.FC<DragDropZoneProps> = ({
         onDragLeave();
       }}
       onDrop={handleDrop}
-      onClick={onBrowseClick} // The whole zone is clickable
       aria-label="Drag and drop zone for image upload"
       role="button"
       tabIndex={0}
@@ -60,10 +55,11 @@ const DragDropZone: React.FC<DragDropZoneProps> = ({
           onBrowseClick();
         }
       }}
+      onClick={onBrowseClick}
     >
       <div className="drag-drop-content">
         <svg
-          className="upload-icon"
+          className={`upload-icon ${isDarkMode ? 'svg-icon-invert' : ''}`}
           xmlns="http://www.w3.org/2000/svg"
           width="48"
           height="48"
