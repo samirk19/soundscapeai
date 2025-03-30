@@ -84,9 +84,8 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ audioUrl, description }
       URL.revokeObjectURL(url);
       document.body.removeChild(a);
       
-      // Close the audio contexts
+      // Close the audio context
       await audioContext.close();
-      await offlineContext.close();
     } catch (err) {
       console.error('Download error:', err);
       setError(err instanceof Error ? err.message : 'Failed to download audio');
