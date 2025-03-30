@@ -1,18 +1,21 @@
 import json
 import boto3
 import os
-from utils import logger, error_handlers
+import sys
+import traceback
 
-# Initialize logger
-log = logger.get_logger()
+# Add direct console logging for debugging
+print("health_check module loading without utils dependency...")
+print(f"Python version: {sys.version}")
+print(f"Environment variables: {os.environ}")
 
-@error_handlers.api_error_handler
 def lambda_handler(event, context):
     """
     Simple health check endpoint to verify if the API is running.
     Also verifies connectivity to required AWS services.
+    This simplified version doesn't depend on utils module.
     """
-    log.info("Health check invoked", event_type="API_CALL")
+    print("Health check invoked")
     
     # Check service connections
     services_status = {}
@@ -27,13 +30,16 @@ def lambda_handler(event, context):
         if images_bucket:
             s3.head_bucket(Bucket=images_bucket)
             services_status['s3_images'] = "connected"
+            print(f"S3 images bucket '{images_bucket}' is connected")
         
         # Check audio bucket
         if audio_bucket:
             s3.head_bucket(Bucket=audio_bucket)
             services_status['s3_audio'] = "connected"
+            print(f"S3 audio bucket '{audio_bucket}' is connected")
     except Exception as e:
-        log.warning("S3 connection check failed", error=e)
+        print(f"S3 connection check failed: {e}")
+        print(traceback.format_exc())
         services_status['s3'] = f"error: {str(e)}"
     
     # Check DynamoDB
@@ -45,8 +51,10 @@ def lambda_handler(event, context):
             table = dynamodb.Table(table_name)
             table.scan(Limit=1)
             services_status['dynamodb'] = "connected"
+            print(f"DynamoDB table '{table_name}' is connected")
     except Exception as e:
-        log.warning("DynamoDB connection check failed", error=e)
+        print(f"DynamoDB connection check failed: {e}")
+        print(traceback.format_exc())
         services_status['dynamodb'] = f"error: {str(e)}"
     
     # Check Step Functions if state machine ARN is available
@@ -56,25 +64,26 @@ def lambda_handler(event, context):
             sfn = boto3.client('stepfunctions')
             sfn.describe_state_machine(stateMachineArn=state_machine_arn)
             services_status['stepfunctions'] = "connected"
+            print(f"Step Functions '{state_machine_arn}' is connected")
     except Exception as e:
-        # This is expected to fail if the ARN isn't available, so don't log as warning
+        # This is expected to fail if the ARN isn't available
         if state_machine_arn:
-            log.warning("Step Functions connection check failed", error=e)
+            print(f"Step Functions connection check failed: {e}")
+            print(traceback.format_exc())
             services_status['stepfunctions'] = f"error: {str(e)}"
     
     # Log health check results
-    log.info(
-        "Health check completed",
-        services_checked=len(services_status),
-        all_healthy=all(not status.startswith("error") for status in services_status.values())
-    )
+    all_healthy = all(not status.startswith("error") for status in services_status.values())
+    print(f"Health check completed. Services checked: {len(services_status)}, All healthy: {all_healthy}")
     
     # Return health status
     return {
         'statusCode': 200,
         'headers': {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Requested-With',
+            'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,PUT,DELETE'
         },
         'body': json.dumps({
             'status': 'healthy',
