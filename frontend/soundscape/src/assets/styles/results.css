@@ -2,19 +2,42 @@
 .results-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: var(--spacing-md);
 }
 
-.results-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+/* Click hint */
+.image-click-hint {
+  text-align: center;
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  font-style: italic;
+  padding: var(--spacing-sm);
+}
+
+.results-content {
+  display: flex;
+  flex-direction: column;
   gap: var(--spacing-xl);
   margin-top: var(--spacing-lg);
 }
 
-@media (min-width: 768px) {
-  .results-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+/* Controls section with Start Over button */
+.controls-section {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+}
+
+.reset-button {
+  min-width: 180px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
 }
 
 /* Making the image container larger and more prominent */
@@ -24,6 +47,10 @@
   border-radius: var(--border-radius-md);
   overflow: hidden;
   position: relative;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 .results-image-container h3 {
@@ -43,10 +70,23 @@
   height: auto;
   display: block;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
-.results-image-container:hover .results-image {
+.results-image:hover {
   transform: scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Description section styles */
+.description-section {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
 }
 
 /* Scene Description Styles */
@@ -126,6 +166,14 @@
 
 .element-name {
   font-weight: 500;
+}
+
+/* Audio section styles */
+.audio-section {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 /* Audio player styles enhancement */

@@ -6,6 +6,7 @@ interface DragDropZoneProps {
   onDragLeave: () => void;
   isDragging: boolean;
   onBrowseClick: () => void;
+  isUploading?: boolean;
 }
 
 const DragDropZone: React.FC<DragDropZoneProps> = ({
@@ -14,6 +15,7 @@ const DragDropZone: React.FC<DragDropZoneProps> = ({
   onDragLeave,
   isDragging,
   onBrowseClick,
+  isUploading = false,
 }) => {
   // Prevent default behavior for drag events
   const preventDefaults = (e: React.DragEvent) => {
@@ -32,7 +34,7 @@ const DragDropZone: React.FC<DragDropZoneProps> = ({
 
   return (
     <div
-      className={`drag-drop-zone ${isDragging ? 'dragging' : ''}`}
+      className={`drag-drop-zone ${isDragging ? 'dragging' : ''} ${isUploading ? 'uploading' : ''}`}
       onDragEnter={(e) => {
         preventDefaults(e);
         onDragEnter();
@@ -76,6 +78,8 @@ const DragDropZone: React.FC<DragDropZoneProps> = ({
         <p className="drag-text">
           {isDragging
             ? 'Drop your image here'
+            : isUploading
+            ? 'Processing upload...'
             : 'Drag and drop your image here'}
         </p>
         
@@ -84,10 +88,14 @@ const DragDropZone: React.FC<DragDropZoneProps> = ({
         <button
           type="button"
           className="browse-button"
-          onClick={onBrowseClick}
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent click event from bubbling
+            onBrowseClick();
+          }}
           aria-label="Browse files for upload"
+          disabled={isUploading}
         >
-          Browse Files
+          {isUploading ? 'Uploading...' : 'Browse Files'}
         </button>
       </div>
     </div>

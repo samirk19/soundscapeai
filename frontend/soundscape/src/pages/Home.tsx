@@ -81,34 +81,29 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-container">
-      <section className="hero-section">
-        <h1>Soundscape AI</h1>
-        <p className="subtitle">Hear the world through images</p>
-        
-        <div className="cta-container">
-          {!audioUrl ? (
-            <>
-              <button 
-                onClick={loadExample}
-                className="example-button"
-                aria-label="Load example soundscape"
-                disabled={isLoading || showExample}
-              >
-                Try an Example
-              </button>
-              <div className="or-divider">or</div>
-            </>
-          ) : (
+      {!audioUrl && (
+        <section className="hero-section">
+          <h1>Soundscape AI</h1>
+          <p className="subtitle">Hear the world through images</p>
+          
+          <div className="cta-container">
+            {/* Try an Example button hidden as requested */}
+            {/* 
             <button 
-              onClick={handleReset}
-              className="reset-button"
-              aria-label="Start over with new image"
+              onClick={loadExample}
+              className="example-button"
+              aria-label="Load example soundscape"
+              disabled={true}
             >
-              Start Over
+              Try an Example
             </button>
-          )}
-        </div>
-      </section>
+            <div className="or-divider">or</div>
+            */}
+          </div>
+        </section>
+      )}
+      
+      {/* Remove top controls section - will move Start Over button to the bottom of the results */}
 
       {!audioUrl && (
         <section className="upload-section">

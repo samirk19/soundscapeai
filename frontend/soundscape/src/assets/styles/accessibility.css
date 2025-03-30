@@ -1,4 +1,17 @@
 /* Accessibility Controls Styles */
+
+/* Visually Hidden (for screen readers only) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
 .accessibility-controls {
   position: fixed;
   bottom: 20px;

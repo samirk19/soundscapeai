@@ -1,164 +1,142 @@
-/* Onboarding Modal Styles */
+/* Modal Styles */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: var(--z-index-modal);
-  }
-  
-  .onboarding-modal {
-    background-color: var(--background-color);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-xl);
-    width: 90%;
-    max-width: 800px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    padding: var(--spacing-lg);
-  }
-  
-  .modal-close-button {
-    position: absolute;
-    top: var(--spacing-sm);
-    right: var(--spacing-sm);
-    background: none;
-    border: none;
-    font-size: var(--font-size-xl);
-    color: var(--text-light);
-    cursor: pointer;
-    z-index: 1;
-  }
-  
-  .modal-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  @media (min-width: 768px) {
-    .modal-content {
-      flex-direction: row;
-      align-items: flex-start;
-    }
-  }
-  
-  .step-image {
-    flex: 1;
-    max-width: 150px;
-    max-height: 75px;
-  }
-  
-  .tutorial-image {
-    width: 100%;
-    height: auto;
-  }
-  
-  .step-content {
-    flex: 2;
-  }
-  
-  .step-title {
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .step-description {
-    line-height: 1.6;
-  }
-  
-  .modal-actions {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-  
-  .step-indicators {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .step-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 500%;
-    background-color: var(--primary-light);
-    border: none;
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
-  }
-  
-  .step-indicator.active {
-    background-color: var(--primary-color);
-  }
-  
-  .navigation-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: var(--spacing-md);
-  }
-  
-  .prev-button, .next-button {
-    padding: var(--spacing-sm) var(--spacing-xl);
-    border-radius: var(--border-radius-md);
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
-  }
-  
-  .prev-button {
-    background-color: var(--background-alt);
-    color: var(--text-color);
-  }
-  
-  .prev-button:hover {
-    background-color: var(--border-color);
-  }
-  
-  .next-button {
-    background-color: var(--primary-color);
-    color: white;
-  }
-  
-  .next-button:hover {
-    background-color: var(--primary-dark);
-  }
-  
-  .skip-button {
-    background: none;
-    border: none;
-    color: var(--text-light);
-    text-align: center;
-    padding: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
-    font-size: var(--font-size-sm);
-    width: fit-content;
-    align-self: center;
-    text-decoration: none;
-  }
-  
-  .skip-button:hover {
-    cursor: pointer;
-    color: var(--text-lighter);
-    text-decoration: none;
-    background: none;
-  }
-  
-  .menu-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: var(--z-index-modal-backdrop);
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-index-modal);
+  padding: var(--spacing-md);
+}
+
+.modal-container {
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl);
+  max-width: 95vw;
+  max-height: 95vh;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: var(--font-size-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  transition: background-color var(--transition-fast);
+}
+
+.modal-close-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-image-container {
+  overflow: auto;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+.modal-image {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+/* Remove audio container as we're using native audio */
+/* .modal-audio-container {
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+} */
+
+/* Image Modal specific styles */
+.results-image {
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.results-image:hover {
+  opacity: 0.9;
+}
+
+/* Onboarding Modal Styles */
+.onboarding-modal .modal-container {
+  width: 90%;
+  max-width: 600px;
+}
+
+.onboarding-content {
+  padding: var(--spacing-xl);
+}
+
+.onboarding-heading {
+  margin-bottom: var(--spacing-lg);
+  color: var(--primary-color);
+  font-size: var(--font-size-xl);
+}
+
+.onboarding-steps {
+  margin-bottom: var(--spacing-xl);
+}
+
+.onboarding-step {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-lg);
+}
+
+.step-number {
+  background-color: var(--primary-color);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-right: var(--spacing-md);
+  flex-shrink: 0;
+}
+
+.step-content h3 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-xs);
+}
+
+.step-content p {
+  margin: 0;
+  color: var(--text-light);
+}
+
+.onboarding-actions {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--spacing-lg);
+}

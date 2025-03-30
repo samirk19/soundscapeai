@@ -199,7 +199,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     <div className="audio-player">
       <h3>Generated Soundscape</h3>
 
-      <div className="audio-player-container" aria-label="Audio player">
+      <div className="audio-player-container" role="region" aria-label="Audio player controls">
         <audio
           ref={audioRef}
           preload="auto"
@@ -269,6 +269,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
                   onChange={seek}
                   className="seek-slider"
                   aria-label="Seek audio position"
+                  aria-valuemin="0"
+                  aria-valuemax={duration || 0}
+                  aria-valuenow={currentTime}
+                  aria-valuetext={`${formatTime(currentTime)} of ${formatTime(duration)}`}
                 />
                 <span className="duration">{formatTime(duration)}</span>
               </div>
@@ -299,6 +303,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
                   onChange={updateVolume}
                   className="volume-slider"
                   aria-label="Volume"
+                  aria-valuemin="0"
+                  aria-valuemax="1"
+                  aria-valuenow={volume}
+                  aria-valuetext={`Volume ${Math.round(volume * 100)}%`}
                 />
               </div>
 

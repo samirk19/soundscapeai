@@ -11,6 +11,7 @@
   --text-lighter: #999999;
   --background-color: #ffffff;
   --background-alt: #f7f9fc;
+  --header-background: #f0f4fc;
   --border-color: #e0e0e0;
   --error-color: #e53935;
   --success-color: #43a047;
@@ -84,6 +85,7 @@
   --text-lighter: #888888;
   --background-color: #121212;
   --background-alt: #1e1e1e;
+  --header-background: #1a1a1a;
   --border-color: #333333;
   --error-color: #f44336;
   --success-color: #66bb6a;
@@ -118,6 +120,7 @@
   --text-lighter: #555555;
   --background-color: #ffffff;
   --background-alt: #f0f0f0;
+  --header-background: #e6e6e6;
   --border-color: #000000;
   
   /* Scene Colors */
@@ -143,6 +146,7 @@
   --text-lighter: #aaaaaa;
   --background-color: #000000;
   --background-alt: #0d0d0d;
+  --header-background: #111111;
   --border-color: #ffffff;
   
   /* Scene Colors - Dark High Contrast */

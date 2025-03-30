@@ -65,9 +65,9 @@ const DetectedElements: React.FC<DetectedElementsProps> = ({ elements }) => {
     <div className="detected-elements">
       <h3>Detected Elements</h3>
       
-      <ul className="elements-list" aria-label="List of detected elements in the image">
+      <ul className="elements-list" role="list" aria-label="List of detected elements in the image">
         {elements.map((element, index) => (
-          <li key={index} className="element-item">
+          <li key={index} className="element-item" role="listitem">
             <span className="element-icon" aria-hidden="true">
               {getElementIcon(element)}
             </span>
