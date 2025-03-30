@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ThemeAwareSVG from '../components/common/ThemeAwareSVG';
 
 const Tutorial: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ const Tutorial: React.FC = () => {
       <section className="tutorial-steps">
         <div className="tutorial-step">
           <div className="step-image">
-            <img 
+            <ThemeAwareSVG 
               src="/tutorial/upload.svg" 
               alt="Upload image illustration" 
               className="tutorial-illustration"
@@ -37,7 +38,7 @@ const Tutorial: React.FC = () => {
         
         <div className="tutorial-step">
           <div className="step-image">
-            <img 
+            <ThemeAwareSVG 
               src="/tutorial/processing.svg" 
               alt="Processing image illustration" 
               className="tutorial-illustration"
@@ -58,7 +59,7 @@ const Tutorial: React.FC = () => {
         
         <div className="tutorial-step">
           <div className="step-image">
-            <img 
+            <ThemeAwareSVG 
               src="/tutorial/listen.svg" 
               alt="Listening to soundscape illustration" 
               className="tutorial-illustration"
@@ -79,7 +80,7 @@ const Tutorial: React.FC = () => {
         
         <div className="tutorial-step">
           <div className="step-image">
-            <img 
+            <ThemeAwareSVG 
               src="/tutorial/download.svg" 
               alt="Downloading soundscape illustration" 
               className="tutorial-illustration"
