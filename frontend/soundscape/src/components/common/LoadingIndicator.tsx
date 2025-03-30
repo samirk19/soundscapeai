@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppContext } from '../../context/AppContext';
 import ProgressBar from './ProgressBar';
+import Button from './Button';
 
 const LoadingIndicator: React.FC = () => {
   const { progress } = useAppContext();
@@ -30,13 +31,13 @@ const LoadingIndicator: React.FC = () => {
       
       <ProgressBar progress={progress} />
       
-      <button
-        className="cancel-button"
+      <Button
+        variant="outline"
         onClick={() => window.location.reload()}
         aria-label="Cancel processing"
       >
         Cancel
-      </button>
+      </Button>
     </div>
   );
 };

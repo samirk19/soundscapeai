@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../common/Button';
 
 interface DragDropZoneProps {
   onDrop: (files: File[]) => void;
@@ -81,14 +82,15 @@ const DragDropZone: React.FC<DragDropZoneProps> = ({
         
         <p className="or-text">or</p>
         
-        <button
+        <Button
+          variant="outline"
           type="button"
           className="browse-button"
           onClick={onBrowseClick}
           aria-label="Browse files for upload"
         >
           Browse Files
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -34,10 +34,10 @@ const Footer: React.FC = () => {
         
         <div className="footer-credits">
           <p>
-            Powered by AWS Rekognition and ElevenLabs
+            Powered by Claude and ElevenLabs
           </p>
           <p className="copyright">
-            &copy; {currentYear} Soundscape. All rights reserved.
+            &copy; {currentYear} Soundscape AI. All rights reserved.
           </p>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Button from './Button';
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,14 +30,15 @@ const Header: React.FC = () => {
         </Link>
         
         <nav className="main-nav">
-          <button 
+          <Button 
+            variant="ghost"
             className={`menu-toggle ${menuOpen ? 'open' : ''}`}
             onClick={toggleMenu}
             aria-expanded={menuOpen}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           >
             <span className="menu-icon"></span>
-          </button>
+          </Button>
           
           <ul className={`nav-list ${menuOpen ? 'open' : ''}`}>
             <li className="nav-item">

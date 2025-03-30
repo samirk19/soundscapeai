@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '../common/Button';
 
 interface DownloadButtonProps {
   audioUrl: string;
@@ -60,7 +61,8 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ audioUrl, description }
 
   return (
     <div className="download-container">
-      <button
+      <Button
+        variant="ghost"
         className="download-button"
         onClick={handleDownload}
         disabled={isDownloading}
@@ -83,7 +85,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ audioUrl, description }
             <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
           </svg>
         )}
-      </button>
+      </Button>
       
       {error && (
         <div className="download-error" aria-live="assertive">

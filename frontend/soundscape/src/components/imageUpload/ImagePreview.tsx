@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Button from '../common/Button';
 
 interface ImagePreviewProps {
   imageUrl: string;
@@ -30,14 +31,15 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, onReset }) => {
     <div className="image-preview-container">
       <div className="image-preview-header">
         <h3>Image Preview</h3>
-        <button
+        <Button
+          variant="ghost"
           type="button"
           className="reset-button"
           onClick={onReset}
           aria-label="Remove this image and upload another"
         >
           <span aria-hidden="true">×</span> Change Image
-        </button>
+        </Button>
       </div>
       
       <div className="image-preview-content">
@@ -62,13 +64,14 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, onReset }) => {
         ) : error ? (
           <div className="image-error" aria-live="assertive">
             <p>{error}</p>
-            <button
+            <Button
+              variant="outline"
               type="button"
               className="try-again-button"
               onClick={onReset}
             >
               Try Again
-            </button>
+            </Button>
           </div>
         ) : (
           <div className="image-wrapper">

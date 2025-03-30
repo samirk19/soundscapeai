@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../../context/AppContext';
+import Button from './Button';
 
 const OnboardingModal: React.FC = () => {
   const { completeOnboarding } = useAppContext();
@@ -118,31 +119,29 @@ const OnboardingModal: React.FC = () => {
           
           <div className="navigation-buttons">
             {currentStep > 0 && (
-              <button 
-                className="prev-button"
+              <Button 
+                variant="outline"
                 onClick={goToPrevious}
                 aria-label="Previous step"
               >
                 Previous
-              </button>
+              </Button>
             )}
-            
-            <button 
-              className="next-button"
+            <Button 
               onClick={goToNext}
               aria-label={currentStep < steps.length - 1 ? 'Next step' : 'Get started'}
             >
               {currentStep < steps.length - 1 ? 'Next' : 'Get Started'}
-            </button>
+            </Button>
           </div>
           
-          <button 
-            className="skip-button"
+          <Button 
+            variant="skip"
             onClick={skipTutorial}
             aria-label="Skip tutorial"
           >
             Skip Tutorial
-          </button>
+          </Button>
         </div>
       </div>
     </div>

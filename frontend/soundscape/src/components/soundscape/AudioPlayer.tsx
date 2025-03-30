@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import AudioVisualizer from './AudioVisualizer';
 import DownloadButton from './DownloadButton';
+import Button from '../common/Button';
 
 interface AudioPlayerProps {
   audioUrl: string;
@@ -147,8 +148,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
         ) : error ? (
           <div className="audio-error" aria-live="assertive">
             <p>{error}</p>
-            <button
-              className="retry-button"
+            <Button
+              variant="outline"
               onClick={() => {
                 setError(null);
                 setIsLoading(true);
@@ -158,12 +159,13 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
               }}
             >
               Retry
-            </button>
+            </Button>
           </div>
         ) : (
           <>
             <div className="player-controls">
-              <button
+              <Button
+                variant="ghost"
                 className={`play-pause-button ${isPlaying ? 'playing' : ''}`}
                 onClick={togglePlayPause}
                 aria-label={isPlaying ? 'Pause' : 'Play'}
@@ -178,7 +180,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
                     <polygon points="5,3 19,12 5,21" />
                   </svg>
                 )}
-              </button>
+              </Button>
               
               <div className="time-slider">
                 <span className="current-time">{formatTime(currentTime)}</span>
@@ -195,7 +197,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
               </div>
               
               <div className="volume-control">
-                <button
+                <Button
+                  variant="ghost"
                   className="volume-button"
                   aria-label={volume === 0 ? 'Unmute' : 'Mute'}
                   onClick={toggleVolume}
@@ -209,7 +212,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
                       <path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18.01,19.86 21,16.28 21,12C21,7.72 18.01,4.14 14,3.23Z" />
                     )}
                   </svg>
-                </button>
+                </Button>
                 <input
                   type="range"
                   min="0"
@@ -222,7 +225,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
                 />
               </div>
               
-              <button
+              <Button
+                variant="ghost"
                 className={`loop-button ${isLooping ? 'active' : ''}`}
                 onClick={toggleLoop}
                 aria-label={isLooping ? 'Disable loop' : 'Enable loop'}
@@ -231,7 +235,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, description }) => {
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M17,17H7V14L3,18L7,22V19H19V13H17M7,7H17V10L21,6L17,2V5H5V11H7V7Z" />
                 </svg>
-              </button>
+              </Button>
               
               <DownloadButton audioUrl={audioUrl} description={description} />
             </div>
