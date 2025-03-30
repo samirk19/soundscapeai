@@ -94,7 +94,6 @@ const ResultsContainer: React.FC = () => {
         imageUrl={imagePreview || ''}
         altText={`Image of ${description}`}
         audioUrl={audioUrl}
-        description={description}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
       />
