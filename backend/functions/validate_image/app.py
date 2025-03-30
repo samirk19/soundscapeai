@@ -59,7 +59,7 @@ def lambda_handler(event, context):
     # Direct console logs for debugging
     print(f"validate_image lambda_handler invoked with event: {event}")
     print(f"Context: {context}")
-    
+
     try:
         # Parse JSON string if needed
         if isinstance(event, str):
@@ -69,27 +69,27 @@ def lambda_handler(event, context):
             except json.JSONDecodeError as e:
                 print(f"Failed to parse event as JSON: {e}")
                 return format_error_response(400, f"Invalid JSON: {str(e)}", event)
-        
+
         # Check required fields in the event
         if not isinstance(event, dict):
             print(f"Event is not a dictionary: {type(event)}")
             return format_error_response(400, "Invalid input format", event)
-            
+
         if 'imageId' not in event or 's3Key' not in event:
             print(f"Missing required fields. Event keys: {event.keys()}")
             return format_error_response(400, "Missing required fields: imageId and s3Key must be provided", event)
-        
+
         # Get image details
         image_id = event['imageId']
         s3_key = event['s3Key']
-        
+
         print(f"Processing image ID: {image_id}, S3 Key: {s3_key}")
-        
+
         # Get file extension from S3 key
         try:
             image_format = s3_key.split('.')[-1].lower()
             print(f"Image format from S3 key: {image_format}")
-            
+
             # Check if format is supported
             if image_format not in SUPPORTED_FORMATS:
                 print(f"Unsupported image format: {image_format}")
@@ -97,7 +97,7 @@ def lambda_handler(event, context):
         except Exception as format_err:
             print(f"Error extracting image format: {format_err}")
             return format_error_response(400, f"Error determining image format: {str(format_err)}", event)
-        
+
         # SKIPPING PILLOW VALIDATION
         # Instead of downloading and validating with Pillow, 
         # we'll just check that the object exists in S3
@@ -109,16 +109,16 @@ def lambda_handler(event, context):
                 Key=s3_key
             )
             print("Image exists in S3")
-            
+
             # Set dimensions to unknown since we're skipping Pillow
             dimensions = "unknown (Pillow validation skipped)"
-            
+
             print("Basic image validation successful (Pillow validation skipped)")
         except Exception as s3_err:
             print(f"Failed to verify image in S3: {s3_err}")
             print(traceback.format_exc())
             return format_error_response(500, f"Could not access image from storage: {str(s3_err)}", event)
-        
+
         # Create initial entry in DynamoDB if it doesn't exist already
         print("Creating/updating entry in DynamoDB")
         try:
@@ -142,10 +142,10 @@ def lambda_handler(event, context):
             print(f"Failed to update DynamoDB entry: {db_err}")
             print(traceback.format_exc())
             return format_error_response(500, f"Failed to store image metadata: {str(db_err)}", event)
-        
+
         # Log success
         print("Image validation complete, proceeding to processing")
-        
+
         # Return data for the next step in the Step Functions workflow
         return {
             'imageId': image_id,
