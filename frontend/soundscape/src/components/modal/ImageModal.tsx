@@ -4,7 +4,6 @@ interface ImageModalProps {
   imageUrl: string;
   altText: string;
   audioUrl: string;
-  description: string;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -13,7 +12,6 @@ const ImageModal: React.FC<ImageModalProps> = ({
   imageUrl,
   altText,
   audioUrl,
-  description,
   isOpen,
   onClose
 }) => {
