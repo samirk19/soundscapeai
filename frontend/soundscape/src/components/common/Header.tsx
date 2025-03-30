@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { useAppContext } from '../../context/AppContext';
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
+  useLocation();
   const navigate = useNavigate();
   const { audioUrl, resetState } = useAppContext();
   
@@ -17,7 +17,7 @@ const Header: React.FC = () => {
     setMenuOpen(false);
   };
 
-  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleLogoClick = () => {
     closeMenu();
     // Always reset state and navigate home
     if (audioUrl) {
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
         <div className="logo">
           <a href="#" className="logo-link" onClick={(e) => {
             e.preventDefault();
-            handleLogoClick(e);
+            handleLogoClick();
           }} aria-label="Go to home page">
             <span className="logo-text">Soundscape AI</span>
           </a>

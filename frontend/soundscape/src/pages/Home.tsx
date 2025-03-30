@@ -15,11 +15,10 @@ const Home: React.FC = () => {
     setProgress, 
     setError, 
     setResults,
-    audioUrl,
-    resetState
+    audioUrl
   } = useAppContext();
   
-  const [showExample, setShowExample] = useState(false);
+  const [showExample] = useState(false);
 
   // Process the image when it's uploaded
   useEffect(() => {
@@ -59,25 +58,10 @@ const Home: React.FC = () => {
   };
 
   // Load an example
-  const loadExample = () => {
-    setShowExample(true);
-    // This would typically load a pre-defined example from assets
-    // For now, we'll just simulate it
-    setTimeout(() => {
-      setResults({
-        description: "A busy city street with tall buildings and traffic",
-        scene: "city",
-        audioUrl: "https://soundscape-audio.s3.amazonaws.com/examples/city.mp3",
-        detectedElements: ["Building", "Car", "Person", "Traffic Light", "Road"],
-      });
-      setShowExample(false);
-    }, 2000);
-  };
+
 
   // Reset the state to start over
-  const handleReset = () => {
-    resetState();
-  };
+
 
   return (
     <div className="home-container">
