@@ -263,13 +263,13 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
                 <span className="current-time">{formatTime(currentTime)}</span>
                 <input
                   type="range"
-                  min="0"
+                  min={0}
                   max={duration || 0}
                   value={currentTime}
                   onChange={seek}
                   className="seek-slider"
                   aria-label="Seek audio position"
-                  aria-valuemin="0"
+                  aria-valuemin={0}
                   aria-valuemax={duration || 0}
                   aria-valuenow={currentTime}
                   aria-valuetext={`${formatTime(currentTime)} of ${formatTime(duration)}`}
@@ -296,15 +296,15 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
                 </Button>
                 <input
                   type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
+                  min={0}
+                  max={1}
+                  step={0.01}
                   value={volume}
                   onChange={updateVolume}
                   className="volume-slider"
                   aria-label="Volume"
-                  aria-valuemin="0"
-                  aria-valuemax="1"
+                  aria-valuemin={0}
+                  aria-valuemax={1}
                   aria-valuenow={volume}
                   aria-valuetext={`Volume ${Math.round(volume * 100)}%`}
                 />
