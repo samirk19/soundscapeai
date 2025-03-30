@@ -5,7 +5,6 @@ import LoadingIndicator from '../components/common/LoadingIndicator';
 import ErrorMessage from '../components/common/ErrorMessage';
 import ResultsContainer from '../components/results/ResultsContainer';
 import { api } from '../services/api';
-import ThemeAwareSVG from '@/components/common/ThemeAwareSVG';
 
 const Home: React.FC = () => {
   const { 
