@@ -1,0 +1,19 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "soundscape-generator"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket"
+s3_prefix = "soundscape-generator"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+parameter_overrides = "AppNamePrefix=\"soundscape\" LogLevel=\"INFO\" CreateDashboard=\"false\""
+resolve_s3 = true
+profile = "hoohacks"
+image_repositories = []
+
+[default.build]
+[default.build.parameters]
+use_container = false
