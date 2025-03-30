@@ -1,38 +1,38 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-    readonly VITE_API_BASE_URL: "https://pknqxnta3a.execute-api.us-east-1.amazonaws.com/prod";
+    readonly VITE_API_BASE_URL: string;
     // Add other environment variables here
-  }
-  
-  interface ImportMeta {
+}
+
+interface ImportMeta {
     readonly env: ImportMetaEnv;
-  }
-  
-  // Declare modules for file types that TypeScript doesn't recognize by default
-  declare module '*.svg' {
+}
+
+// Declare modules for file types that TypeScript doesn't recognize by default
+declare module '*.svg' {
     import React = require('react');
     export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
     const src: string;
     export default src;
-  }
-  
-  declare module '*.jpg' {
+}
+
+declare module '*.jpg' {
     const content: string;
     export default content;
-  }
-  
-  declare module '*.png' {
+}
+
+declare module '*.png' {
     const content: string;
     export default content;
-  }
-  
-  declare module '*.json' {
+}
+
+declare module '*.json' {
     const content: string;
     export default content;
-  }
-  
-  declare module '*.mp3' {
+}
+
+declare module '*.mp3' {
     const src: string;
     export default src;
-  }
+}

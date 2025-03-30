@@ -30,13 +30,6 @@ const DragDropZone: React.FC<DragDropZoneProps> = ({
     }
   };
 
-  // Handle the browse button click
-  const handleBrowseClick = (e: React.MouseEvent) => {
-    // Stop propagation to prevent the zone's click handler from being triggered
-    e.stopPropagation();
-    onBrowseClick();
-  };
-
   return (
     <div
       className={`drag-drop-zone ${isDragging ? 'dragging' : ''}`}
